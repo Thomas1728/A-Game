@@ -6,9 +6,10 @@ using UnityEngine;
 public class mainchar_movement : MonoBehaviour
 {
     public float speed = 10f;
-    public float jumpVelocity = 250f;
+    public float jumpVelocity = 13f;
     public float energy = 1000f;
-    public bool isZone ;     // to check the energy deduction
+    public bool isZone ; // to check the energy deduction
+    public Animator animator;
 
     private Rigidbody2D mybody;
     private BoxCollider2D boxCollider2D;
@@ -72,13 +73,16 @@ public class mainchar_movement : MonoBehaviour
         {
             if (energy > 0)
             {
+                animator.Play("WALKING");
                 mybody.velocity = new Vector2(5, mybody.velocity.y);
                 energy--; // revise it later
+                
             }
                
         }
         else
         {
+            animator.Play("WALKING");
             mybody.velocity = new Vector2(5, mybody.velocity.y);
         }
 
@@ -88,6 +92,7 @@ public class mainchar_movement : MonoBehaviour
     private void MoveBackward() {
 
         Debug.Log("MoveBackward");
+        animator.Play("WALKING");
 
         mybody.velocity = new Vector2(-5, mybody.velocity.y);
 
