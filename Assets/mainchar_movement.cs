@@ -6,15 +6,18 @@ using UnityEngine;
 public class mainchar_movement : MonoBehaviour
 {
     public float speed = 10f;
-    public float jumpVelocity = 10f;
+    public float jumpVelocity = 250f;
     public float energy = 1000f;
-    public bool isZone = false;     // to check the energy deduction
+    public bool isZone ;     // to check the energy deduction
 
     private Rigidbody2D mybody;
+    private BoxCollider2D boxCollider2D;
+    [SerializeField] private LayerMask gridLayerMask;
 
-    private int timeOfJump = 0;
+    //private int timeOfJump = 0;
     private float groundY;
     private float jumpY;
+    private bool doubleJump;
 
     //public GameInputController controller;
 
@@ -23,35 +26,42 @@ public class mainchar_movement : MonoBehaviour
 
     private void Awake()
     {
-        //controller = new GameInputController();
-        //controller.player.move_forward.performed += CTX => MoveForward();
-        //controller.player.move_backward.performed += CTX => MoveBackward();
-
-
-
-    }
-    void Start()
-    {
         Debug.Log("started");
         //controller = new GameInputController();
         //controller.player.move_forward.performed += CTX => MoveForward();
         //controller.player.move_backward.performed += CTX => MoveBackward();
 
-        mybody = GetComponent<Rigidbody2D>();
-
+        mybody = transform.GetComponent<Rigidbody2D>();
+        boxCollider2D = transform.GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
+        if (IsGrounded() ){
+            doubleJump = true;
+        }
+        if (Input.GetKeyDown(KeyCode.Space)){
+            if (IsGrounded()){
+                Debug.Log("Jump");
+                mybody.velocity = Vector2.up * jumpVelocity * 1.618f;
+            } else {
+                if (doubleJump){
+                    Debug.Log("DoubleJump");
+                    mybody.velocity = Vector2.up * jumpVelocity;
+                    doubleJump = false;
+                }
+            }
             
-            Jump();
-
         }
 
+        HandleMovement();
+    }
 
+    private bool IsGrounded() {
+        RaycastHit2D rch2D = Physics2D.BoxCast(boxCollider2D.bounds.center, boxCollider2D.bounds.size, 0f, Vector2.down, .1f, gridLayerMask);
+        Debug.Log(rch2D.collider);
+        return rch2D.collider != null;
     }
 
 
@@ -83,31 +93,16 @@ public class mainchar_movement : MonoBehaviour
 
     }
 
-    private void Jump()
-    {
-        Debug.Log("Jump");
-        while (timeOfJump < 2)
-        {
-            mybody.velocity = Vector2.up * jumpVelocity;
-            timeOfJump++;
-        }
-        // check the landed condition here
-    }
-    
-    
-    private void FixedUpdate()
-    {
-        if (Input.GetKey(KeyCode.D))
-        {
-            MoveForward();
-            timeOfJump = 0; // remove it
-        }
-        else if (Input.GetKey(KeyCode.A)) {
-
+    private void HandleMovement() {
+        if (Input.GetKey(KeyCode.A)){
             MoveBackward();
-            timeOfJump = 0; // remove it
-
+        } else {
+            if (Input.GetKey(KeyCode.D)){
+                MoveForward();
+            } else {
+                // No keys pressed
+                mybody.velocity = new Vector2(0, mybody.velocity.y);
+            }
         }
-
     }
 }
