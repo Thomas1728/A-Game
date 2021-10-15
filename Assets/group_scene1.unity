@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571336, b: 0.3069219, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -526,7 +526,7 @@ GameObject:
   - component: {fileID: 239301538}
   - component: {fileID: 239301539}
   - component: {fileID: 239301540}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1902,7 +1902,7 @@ GameObject:
   - component: {fileID: 648793926}
   - component: {fileID: 648793928}
   - component: {fileID: 648793927}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tilemap (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3031,7 +3031,7 @@ GameObject:
   - component: {fileID: 1757219885}
   - component: {fileID: 1757219887}
   - component: {fileID: 1757219886}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46095,6 +46095,9 @@ MonoBehaviour:
   jumpVelocity: 10
   energy: 1000
   isZone: 0
+  gridLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!61 &1837666056
 BoxCollider2D:
   m_ObjectHideFlags: 0
