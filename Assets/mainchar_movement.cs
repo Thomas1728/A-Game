@@ -6,9 +6,9 @@ using UnityEngine;
 public class mainchar_movement : MonoBehaviour
 {
     public float speed = 10f;
-    public float jumpVelocity = 100f;
+    public float jumpVelocity = 250f;
     public float energy = 1000f;
-    public bool isZone = false;     // to check the energy deduction
+    public bool isZone ;     // to check the energy deduction
 
     private Rigidbody2D mybody;
     private BoxCollider2D boxCollider2D;
@@ -44,7 +44,7 @@ public class mainchar_movement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space)){
             if (IsGrounded()){
                 Debug.Log("Jump");
-                mybody.velocity = Vector2.up * jumpVelocity;
+                mybody.velocity = Vector2.up * jumpVelocity * 1.618f;
             } else {
                 if (doubleJump){
                     Debug.Log("DoubleJump");
