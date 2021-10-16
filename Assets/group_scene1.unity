@@ -2730,7 +2730,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1068416855}
   - component: {fileID: 1068416857}
-  - component: {fileID: 1068416856}
   m_Layer: 0
   m_Name: Point Light 2D
   m_TagString: Untagged
@@ -2752,26 +2751,6 @@ Transform:
   m_Father: {fileID: 933886443}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1068416856
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1068416854}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb46f4a5d37c71541ab7b38eb98f6684, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 10
-  jumpVelocity: 13
-  energy: 1000
-  isZone: 1
-  animator: {fileID: 0}
-  gridLayerMask:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!114 &1068416857
 MonoBehaviour:
   m_ObjectHideFlags: 0
