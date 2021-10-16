@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="36d2916f-ef32-45ae-8214-85e2d3663913" name="Changes" comment="revised jump velocity">
-      <change beforePath="$PROJECT_DIR$/Assets/mainchar_movement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/mainchar_movement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.A Game/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.A Game/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +57,7 @@
       <option name="presentableId" value="Default" />
       <updated>1633732952201</updated>
       <workItem from="1633732956868" duration="4986000" />
-      <workItem from="1634337885961" duration="3447000" />
+      <workItem from="1634337885961" duration="4068000" />
     </task>
     <task id="LOCAL-00001" summary="revised movement settings">
       <created>1633737868279</created>
