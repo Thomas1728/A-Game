@@ -8,7 +8,7 @@ public class mainchar_movement : MonoBehaviour
     public float speed = 10f;
     public float jumpVelocity = 13f;
     public float energy = 1000f;
-    public bool isZone ; // to check the energy deduction
+    public bool isZone; // to check the energy deduction
     public Animator animator;
 
     private Rigidbody2D mybody;
@@ -39,34 +39,44 @@ public class mainchar_movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (IsGrounded() ){
+        if (IsGrounded())
+        {
             doubleJump = true;
         }
-        if (Input.GetKeyDown(KeyCode.Space)){
-            if (IsGrounded()){
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (IsGrounded())
+            {
                 Debug.Log("Jump");
                 mybody.velocity = Vector2.up * jumpVelocity * 1.618f;
-            } else {
-                if (doubleJump){
+            }
+            else
+            {
+                if (doubleJump)
+                {
                     Debug.Log("DoubleJump");
                     mybody.velocity = Vector2.up * jumpVelocity;
                     doubleJump = false;
                 }
             }
-            
+
         }
 
         HandleMovement();
     }
 
-    private bool IsGrounded() {
-        RaycastHit2D rch2D = Physics2D.BoxCast(boxCollider2D.bounds.center, boxCollider2D.bounds.size, 0f, Vector2.down, .1f, gridLayerMask);
+    private bool IsGrounded()
+    {
+        RaycastHit2D rch2D = Physics2D.BoxCast(boxCollider2D.bounds.center, boxCollider2D.bounds.size, 0f, Vector2.down,
+            .1f, gridLayerMask);
         Debug.Log(rch2D.collider);
         return rch2D.collider != null;
     }
 
 
-    private void MoveForward() {
+    private void MoveForward()
+    {
 
         Debug.Log("MoveForward");
         if (isZone == false)
@@ -76,9 +86,9 @@ public class mainchar_movement : MonoBehaviour
                 animator.Play("WALKING");
                 mybody.velocity = new Vector2(5, mybody.velocity.y);
                 energy--; // revise it later
-                
+
             }
-               
+
         }
         else
         {
@@ -89,7 +99,8 @@ public class mainchar_movement : MonoBehaviour
 
     }
 
-    private void MoveBackward() {
+    private void MoveBackward()
+    {
 
         Debug.Log("MoveBackward");
         animator.Play("WALKING");
@@ -98,16 +109,23 @@ public class mainchar_movement : MonoBehaviour
 
     }
 
-    private void HandleMovement() {
-        if (Input.GetKey(KeyCode.A)){
+    private void HandleMovement()
+    {
+        if (Input.GetKey(KeyCode.A))
+        {
             MoveBackward();
-        } else {
-            if (Input.GetKey(KeyCode.D)){
-                MoveForward();
-            } else {
-                // No keys pressed
-                mybody.velocity = new Vector2(0, mybody.velocity.y);
-            }
         }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            MoveForward();
+        }
+        else
+        {
+            // No keys pressed
+            animator.Play("IDLE");
+            mybody.velocity = new Vector2(0, mybody.velocity.y);
+        }
+
     }
-}
+}    
+
