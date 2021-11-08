@@ -56,7 +56,7 @@ public class mainchar_movement : MonoBehaviour
                 if (doubleJump)
                 {
                     Debug.Log("DoubleJump");
-                    mybody.velocity = Vector2.up * jumpVelocity;
+                    mybody.velocity = Vector2.up * jumpVelocity * 1.618f;
                     doubleJump = false;
                 }
             }
