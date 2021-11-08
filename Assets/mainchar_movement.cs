@@ -49,6 +49,7 @@ public class mainchar_movement : MonoBehaviour
             if (IsGrounded())
             {
                 Debug.Log("Jump");
+                animator.Play("JUMPING");
                 mybody.velocity = Vector2.up * jumpVelocity * 1.618f;
             }
             else
@@ -56,6 +57,7 @@ public class mainchar_movement : MonoBehaviour
                 if (doubleJump)
                 {
                     Debug.Log("DoubleJump");
+                    animator.Play("JUMPING");
                     mybody.velocity = Vector2.up * jumpVelocity * 1.618f;
                     doubleJump = false;
                 }
