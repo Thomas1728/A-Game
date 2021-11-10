@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
@@ -19,6 +20,7 @@ public class mainchar_movement : MonoBehaviour
     private float groundY;
     private float jumpY;
     private bool doubleJump;
+    private int jumpCounter = 0;
 
     //public GameInputController controller;
 
@@ -38,54 +40,55 @@ public class mainchar_movement : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        if (IsGrounded())
-        {
-            doubleJump = true;
-        }
-
+    {   
+        animator.SetBool("isWalking", false);
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (IsGrounded())
+            if (jumpCounter <= 1)
             {
-                Debug.Log("Jump");
-                animator.Play("JUMPING");
-                mybody.velocity = Vector2.up * jumpVelocity * 1.618f;
-            }
-            else
-            {
-                if (doubleJump)
+                if (jumpCounter == 1)
                 {
-                    Debug.Log("DoubleJump");
-                    animator.Play("JUMPING");
-                    mybody.velocity = Vector2.up * jumpVelocity * 1.618f;
-                    doubleJump = false;
+                    animator.SetBool("isDoubleJumping", true);
                 }
-            }
 
+                mybody.velocity = Vector2.up * jumpVelocity * 1.618f;
+                jumpCounter++;
+            }
         }
 
         HandleMovement();
     }
 
-    private bool IsGrounded()
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        RaycastHit2D rch2D = Physics2D.BoxCast(boxCollider2D.bounds.center, boxCollider2D.bounds.size, 0f, Vector2.down,
-            .1f, gridLayerMask);
-        Debug.Log(rch2D.collider);
-        return rch2D.collider != null;
+        if (other.gameObject.CompareTag("Ground"))
+        {
+            animator.SetBool("isJumping", false);
+            animator.SetBool("isDoubleJumping", false);
+            animator.SetBool("isLanding", true);
+            doubleJump = true;
+            jumpCounter = 0;
+        }
     }
 
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Ground"))
+        {
+            animator.SetBool("isJumping", true);
+            animator.SetBool("isLanding",false);
+        }
+    }
 
     private void MoveForward()
     {
-
+        animator.SetBool("isWalking", true);
         Debug.Log("MoveForward");
         if (isZone == false)
         {
             if (energy > 0)
             {
-                animator.Play("WALKING");
+                //animator.Play("WALKING");
                 mybody.velocity = new Vector2(5, mybody.velocity.y);
                 energy--; // revise it later
 
@@ -94,7 +97,7 @@ public class mainchar_movement : MonoBehaviour
         }
         else
         {
-            animator.Play("WALKING");
+            //animator.Play("WALKING");
             mybody.velocity = new Vector2(5, mybody.velocity.y);
         }
 
@@ -103,9 +106,9 @@ public class mainchar_movement : MonoBehaviour
 
     private void MoveBackward()
     {
-
+        animator.SetBool("isWalking", true);
         Debug.Log("MoveBackward");
-        animator.Play("WALKING");
+        //animator.Play("WALKING");
 
         mybody.velocity = new Vector2(-5, mybody.velocity.y);
 
@@ -124,7 +127,7 @@ public class mainchar_movement : MonoBehaviour
         else
         {
             // No keys pressed
-            animator.Play("IDLE");
+            //animator.Play("IDLE");
             mybody.velocity = new Vector2(0, mybody.velocity.y);
         }
 
