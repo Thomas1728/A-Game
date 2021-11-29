@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - electricity1
+  - electricity2
+  - electricity3
   layers:
   - Default
   - TransparentFX
