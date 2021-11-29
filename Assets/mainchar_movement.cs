@@ -229,7 +229,7 @@ public class mainchar_movement : MonoBehaviour
 
         }
         else{
-            Debug.Log("EnergyUsedUp")
+            Debug.Log("EnergyUsedUp");
         }
   
 
