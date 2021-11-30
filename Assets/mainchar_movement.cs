@@ -144,7 +144,6 @@ public class mainchar_movement : MonoBehaviour
                             }
                             
                         }
-                        energy-= Time.deltaTime * 10f;
                     }
             }
             if(!powerIsBroken[1])
