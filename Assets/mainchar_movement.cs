@@ -135,10 +135,13 @@ public class mainchar_movement : MonoBehaviour
             {
                     if(transform.position.x>powerStation[0].position.x&&transform.position.x<powerStation[1].position.x)
                     {
-                        if(mybody.velocity.x>0)
+                        if(mybody.velocity.x>0 || mybody.velocity.x<0 || mybody.velocity.y>0)
                         {
                             if (energy >= 0)
-                            {energy-= Time.deltaTime*150f;}
+                            {
+                                energy-= Time.deltaTime*150f;
+                                energy-= Time.deltaTime * 10f;
+                            }
                             
                         }
                     }
@@ -147,22 +150,30 @@ public class mainchar_movement : MonoBehaviour
             {
                     if(transform.position.x>powerStation[1].position.x&&transform.position.x<powerStation[2].position.x)
                     {
-                        if(mybody.velocity.x>0)
+                        if(mybody.velocity.x>0 || mybody.velocity.x<0 || mybody.velocity.y>0)
                         {
                             if (energy >= 0)
-                            {energy-= Time.deltaTime*150f;}
+                            {
+                                energy-= Time.deltaTime*150f;
+                                energy-= Time.deltaTime * 10f;
+                            } 
                         }
+                        
                     }
             }
             if(!powerIsBroken[2])
             {
                     if(transform.position.x>powerStation[2].position.x)
                     {
-                        if(mybody.velocity.x>0)
+                        if(mybody.velocity.x>0 || mybody.velocity.x<0 || mybody.velocity.y>0)
                         {
                             if (energy >= 0)
-                            {energy-= Time.deltaTime*150f;}
+                            {
+                                energy-= Time.deltaTime*150f;
+                                energy-= Time.deltaTime * 10f;
+                            }
                         }
+                        
                     }
             }
         
@@ -201,17 +212,19 @@ public class mainchar_movement : MonoBehaviour
     }
 
     private void HanldJump(){
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (jumpCounter <= 1)
+        if (energy > 0){
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                if (jumpCounter == 1)
+                if (jumpCounter <= 1)
                 {
-                    animator.SetBool("isDoubleJumping", true);
-                }
+                    if (jumpCounter == 1)
+                    {
+                        animator.SetBool("isDoubleJumping", true);
+                    }
 
-                mybody.velocity = Vector2.up * jumpVelocity * 1.618f;
-                jumpCounter++;
+                    mybody.velocity = Vector2.up * jumpVelocity * 1.618f;
+                    jumpCounter++;
+                }
             }
         }
     }
@@ -236,12 +249,13 @@ public class mainchar_movement : MonoBehaviour
     }
 
     private void MoveBackward()
-    {
-        animator.SetBool("isWalking", true);
-        Debug.Log("MoveBackward");
-        //animator.Play("WALKING");
+    {   if (energy > 0){
+            animator.SetBool("isWalking", true);
+            Debug.Log("MoveBackward");
+            //animator.Play("WALKING");
 
-        mybody.velocity = new Vector2(-speed, mybody.velocity.y);
+            mybody.velocity = new Vector2(-speed, mybody.velocity.y);
+        }
 
     }
 
