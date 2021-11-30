@@ -86,7 +86,7 @@ public class mainchar_movement : MonoBehaviour
         if (allowTrigger1){
             if(Input.GetKeyDown(KeyCode.E))
             {
-                print("发电站1解锁");
+                print("generator 1 unlock");
                 powerIsBroken[0] =true;
                 if (energy <= 0){
                     energy = 1000;
@@ -96,7 +96,7 @@ public class mainchar_movement : MonoBehaviour
         if (allowTrigger2){
             if(Input.GetKeyDown(KeyCode.E))
             {
-                print("发电站2解锁");
+                print("generator 2 unlock");
                 powerIsBroken[1] =true;
                 if (energy <= 0){
                     energy = 1000;
@@ -106,7 +106,7 @@ public class mainchar_movement : MonoBehaviour
         if (allowTrigger3){
             if(Input.GetKeyDown(KeyCode.E))
             {
-                print("发电站3解锁");
+                print("generator 3 unlock");
                 powerIsBroken[2] =true;
                 if (energy <= 0){
                     energy = 1000;
@@ -139,8 +139,8 @@ public class mainchar_movement : MonoBehaviour
                         {
                             if (energy >= 0)
                             {
-                                energy-= Time.deltaTime*150f;
-                                energy-= Time.deltaTime * 10f;
+                                energy-= Time.deltaTime*15f;
+                                energy-= Time.deltaTime * 1f;
                             }
                             
                         }
@@ -154,8 +154,8 @@ public class mainchar_movement : MonoBehaviour
                         {
                             if (energy >= 0)
                             {
-                                energy-= Time.deltaTime*150f;
-                                energy-= Time.deltaTime * 10f;
+                                energy-= Time.deltaTime*15f;
+                                energy-= Time.deltaTime * 1f;
                             } 
                         }
                         
@@ -169,8 +169,8 @@ public class mainchar_movement : MonoBehaviour
                         {
                             if (energy >= 0)
                             {
-                                energy-= Time.deltaTime*150f;
-                                energy-= Time.deltaTime * 10f;
+                                energy-= Time.deltaTime*15f;
+                                energy-= Time.deltaTime * 1f;
                             }
                         }
                         
