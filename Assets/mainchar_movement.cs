@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
+
 using UnityEngine;
 using UnityEngine.UI;
 //using UnityEngine.InputSystem;
@@ -10,7 +10,8 @@ public class mainchar_movement : MonoBehaviour
      public Slider energyBar;
     public float speed = 15f;
     public float jumpVelocity = 15f;
-    public float energy = 1000f;
+    public float energy = 200f;
+
     public bool isZone; // to check the energy deduction
     public Animator animator;
     
@@ -33,6 +34,13 @@ public class mainchar_movement : MonoBehaviour
     public GameObject  tip1;
     public GameObject  tip2;
     public GameObject  tip3;
+
+    public GameObject fog1;
+    public GameObject fog2;
+    public GameObject fog3;
+
+
+
     //public GameInputController controller;
 
     // Start is called before the first frame update
@@ -84,32 +92,36 @@ public class mainchar_movement : MonoBehaviour
     private void controlElectricity(){
 
         if (allowTrigger1){
-            if(Input.GetKeyDown(KeyCode.E))
+            if(Input.GetKeyDown(KeyCode.P))
             {
                 print("generator 1 unlock");
+                fog1.SetActive(false);
                 powerIsBroken[0] =true;
                 if (energy <= 0){
-                    energy = 1000;
+                    energy = 200;
                 }
             }
         }
         if (allowTrigger2){
-            if(Input.GetKeyDown(KeyCode.E))
+            if(Input.GetKeyDown(KeyCode.P))
             {
                 print("generator 2 unlock");
+                fog2.SetActive(false);
                 powerIsBroken[1] =true;
                 if (energy <= 0){
-                    energy = 1000;
+                    energy = 200;
                 }
             }
         }
         if (allowTrigger3){
-            if(Input.GetKeyDown(KeyCode.E))
+            if(Input.GetKeyDown(KeyCode.P))
             {
                 print("generator 3 unlock");
+                fog3.SetActive(false);
+
                 powerIsBroken[2] =true;
                 if (energy <= 0){
-                    energy = 1000;
+                    energy = 200;
                 }
             }
         }
@@ -139,11 +151,17 @@ public class mainchar_movement : MonoBehaviour
                         {
                             if (energy >= 0)
                             {
-                                energy-= Time.deltaTime*15f;
-                                energy-= Time.deltaTime * 1f;
+                                energy-= Time.deltaTime* 20f;
+                             
                             }
                             
                         }
+                        if (energy >= 0) {
+
+                         energy -= Time.deltaTime * 5f;
+
+                        }
+                        
                     }
             }
             if(!powerIsBroken[1])
@@ -154,9 +172,14 @@ public class mainchar_movement : MonoBehaviour
                         {
                             if (energy >= 0)
                             {
-                                energy-= Time.deltaTime*15f;
-                                energy-= Time.deltaTime * 1f;
+                                energy-= Time.deltaTime*20f;
+                                
                             } 
+                        }
+                        if (energy >= 0) {
+
+                         energy -= Time.deltaTime * 5f;
+
                         }
                         
                     }
@@ -169,9 +192,14 @@ public class mainchar_movement : MonoBehaviour
                         {
                             if (energy >= 0)
                             {
-                                energy-= Time.deltaTime*15f;
-                                energy-= Time.deltaTime * 1f;
+                                energy-= Time.deltaTime*20f;
+                                
                             }
+                        }
+                        if (energy >= 0) {
+
+                         energy -= Time.deltaTime * 5f;
+
                         }
                         
                     }
@@ -181,7 +209,7 @@ public class mainchar_movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
-        energyBar.value = energy/1000f;
+        energyBar.value = energy/200f;
         energyConsume();
         controlElectricity();
         animator.SetBool("isWalking", false);
