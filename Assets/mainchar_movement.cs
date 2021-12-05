@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 //using UnityEngine.InputSystem;
 public class mainchar_movement : MonoBehaviour
 {
@@ -11,8 +12,10 @@ public class mainchar_movement : MonoBehaviour
     public float speed = 15f;
     public float jumpVelocity = 15f;
     public float energy = 200f;
+    public float max_energy = 200f;
+    public float action_consume = 20f;
+    public float nature_consume = 5f;
 
-    public bool isZone; // to check the energy deduction
     public Animator animator;
     
     private Rigidbody2D mybody;
@@ -20,6 +23,8 @@ public class mainchar_movement : MonoBehaviour
     [SerializeField] private LayerMask gridLayerMask;
 
     //private int timeOfJump = 0;
+    private float sleep = 0f;
+    private bool rebornTimes = true;
     private float groundY;
     private float jumpY;
     private int jumpCounter = 0;
@@ -29,11 +34,13 @@ public class mainchar_movement : MonoBehaviour
     private bool allowTrigger3;
 
     public bool doubleJump = false;
-    public Transform[]     powerStation;
-    public bool[]     powerIsBroken;
+    public Transform[] powerStation;
+    public bool[] powerIsBroken;
     public GameObject  tip1;
     public GameObject  tip2;
     public GameObject  tip3;
+
+    public Vector3 rebornPosition;
 
     public GameObject fog1;
     public GameObject fog2;
@@ -49,7 +56,9 @@ public class mainchar_movement : MonoBehaviour
     {
         
         if(collision.CompareTag("electricity1"))
-        {
+        { 
+            
+            rebornPosition = collision.transform.position;
             tip1.SetActive(true);
             allowTrigger1 = true;
             
@@ -94,11 +103,12 @@ public class mainchar_movement : MonoBehaviour
         if (allowTrigger1){
             if(Input.GetKeyDown(KeyCode.P))
             {
+                rebornTimes = true;
                 print("generator 1 unlock");
                 fog1.SetActive(false);
                 powerIsBroken[0] =true;
                 if (energy <= 0){
-                    energy = 200;
+                    energy = max_energy;
                 }
             }
         }
@@ -109,7 +119,7 @@ public class mainchar_movement : MonoBehaviour
                 fog2.SetActive(false);
                 powerIsBroken[1] =true;
                 if (energy <= 0){
-                    energy = 200;
+                    energy = max_energy;
                 }
             }
         }
@@ -121,14 +131,36 @@ public class mainchar_movement : MonoBehaviour
 
                 powerIsBroken[2] =true;
                 if (energy <= 0){
-                    energy = 200;
+                    energy = max_energy;
                 }
             }
         }
         
     }
 
-
+    private void reborn()
+    {
+        if (energy <= 0 && rebornTimes)
+        {
+            rebornTimes = false;
+            StartCoroutine(waiter());
+            
+            
+        }
+    }
+    IEnumerator waiter()
+    {
+        yield return new WaitForSeconds(2);
+        transform.position = rebornPosition;
+        print("reborn");
+        powerIsBroken[0] = false;
+        powerIsBroken[1] = false;
+        powerIsBroken[2] = false;
+        fog1.SetActive(true);
+        fog2.SetActive(true);
+        fog3.SetActive(true);
+        
+    }
     private void Awake()
     {
       
@@ -151,14 +183,14 @@ public class mainchar_movement : MonoBehaviour
                         {
                             if (energy >= 0)
                             {
-                                energy-= Time.deltaTime* 20f;
+                                energy-= Time.deltaTime* action_consume;
                              
                             }
                             
                         }
                         if (energy >= 0) {
 
-                         energy -= Time.deltaTime * 5f;
+                         energy -= Time.deltaTime * nature_consume;
 
                         }
                         
@@ -172,13 +204,13 @@ public class mainchar_movement : MonoBehaviour
                         {
                             if (energy >= 0)
                             {
-                                energy-= Time.deltaTime*20f;
+                                energy-= Time.deltaTime*action_consume;
                                 
                             } 
                         }
                         if (energy >= 0) {
 
-                         energy -= Time.deltaTime * 5f;
+                         energy -= Time.deltaTime * nature_consume;
 
                         }
                         
@@ -192,13 +224,13 @@ public class mainchar_movement : MonoBehaviour
                         {
                             if (energy >= 0)
                             {
-                                energy-= Time.deltaTime*20f;
+                                energy-= Time.deltaTime*action_consume;
                                 
                             }
                         }
                         if (energy >= 0) {
 
-                         energy -= Time.deltaTime * 5f;
+                         energy -= Time.deltaTime * nature_consume;
 
                         }
                         
@@ -209,13 +241,15 @@ public class mainchar_movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
-        energyBar.value = energy/200f;
+        energyBar.value = energy/max_energy;
+        
         energyConsume();
         controlElectricity();
         animator.SetBool("isWalking", false);
         
         HanldJump();
         HandleMovement();
+        reborn();
     }
 
     private void OnCollisionEnter2D(Collision2D other)
