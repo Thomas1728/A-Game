@@ -22,8 +22,6 @@ public class mainchar_movement : MonoBehaviour
     private BoxCollider2D boxCollider2D;
     [SerializeField] private LayerMask gridLayerMask;
 
-    //private int timeOfJump = 0;
-    private float sleep = 0f;
     private bool rebornTimes = true;
     private float groundY;
     private float jumpY;
@@ -250,6 +248,10 @@ public class mainchar_movement : MonoBehaviour
         HanldJump();
         HandleMovement();
         reborn();
+        if(Input.GetKeyDown("escape"))
+        {
+            Application.Quit();
+        }    
     }
 
     private void OnCollisionEnter2D(Collision2D other)
